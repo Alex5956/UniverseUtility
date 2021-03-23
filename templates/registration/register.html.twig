@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+     {{ encore_entry_link_tags('register') }}
+{% endblock %}
+{% form_theme  registrationForm 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+    <div class="preloader"></div>
+    <h1>Register</h1>
+
+    <div class="container">
+        {{ app.session.id}}
+        <div class="row-cols-1">
+                Ici enregistrements:
+            </div>
+        <div class="col-12">
+        {{ form_start(registrationForm) }}
+        {{ form_row(registrationForm.firstname) }}
+        {{ form_row(registrationForm.name) }}
+        {{ form_row(registrationForm.email) }}
+        {{ form_row(registrationForm.plainPassword)}}
+        {{ form_row(registrationForm.telephone) }}
+        {{ form_row(registrationForm.file,{attr:{'placeholder':'veuillez importer votre CV'}})}}
+        {{ form_row(registrationForm.agreeTerms) }}
+        <input type="hidden" name="_csrf_token"
+           value="{{ csrf_token('authenticate') }}">
+        <button type="submit" class="btn btn-primary">Enregistrer!</button>
+        {{ form_end(registrationForm) }}
+            </div>
+    </div>
+
+
+    {% block javascripts %}
+{#        <script type="text/javascript">#}
+
+{#            $(document).ready(function() {#}
+{#                $('.preloader').fadeOut('slow');#}
+{#                console.log('coucou');#}
+{#            });#}
+{#            </script>#}
+        {{  encore_entry_script_tags('registerJS') }}
+        {{encore_entry_script_tags('stripe')}}
+{#        <script src="./{{ asset('build/stripe.js') }}"></script>#}
+    {% endblock %}
+{% endblock %}
+
+
+
+
+
+
+
+
+

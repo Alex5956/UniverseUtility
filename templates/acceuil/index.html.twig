@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AcceuilController!{% endblock %}
+
+{% block body %}
+    <h1> Alexandre Marillesse</h1>
+    <p>Developpeur</p>
+{% block stylesheets %}
+   {{ parent() }}
+    {{ encore_entry_link_tags('acceuil') }}
+    {{  encore_entry_link_tags('algolia-autocomplete') }}
+{%  endblock  %}
+
+<div class="container">
+{#    {{ app.session.id }}#}
+{#    <p>voici le acheteurBoolean</p>#}
+{#    {{ app.session.get('acheteurBoolean') }}#}
+
+</div>
+<div>
+    <br>Bonjour ! , bienvenue sur la Page de MyUniverseUtility, moi ALexandre Marillesse je suis son créateur </p>
+    <input class="col-2" id="search" name="search" value="votre recherche">
+</div>
+    {{ app.session.id }}
+    <div class="col-12">
+    {{ form_start(form2) }}
+    {{ form_row(form2.file,{attr:{'placeholder':'veuillez importer votre CV'}}) }}
+    {{ form_widget(form2) }}
+    <button type="submit" class="btn btn-primary">Enregistrer!</button>
+    {{ form_end(form2) }}
+    </div>
+    <div class="progress-bar" id="progressBar">
+        <div class="progress-bar-fill">
+            <span class="progress-bar-text">0</span>
+        </div>
+    </div>
+
+{% endblock %}
+{%  block javascripts %}
+{{ parent() }}
+    <script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script>
+    {{  encore_entry_script_tags('uploadedVideo') }}
+{% endblock %}
