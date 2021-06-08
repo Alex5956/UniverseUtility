@@ -13,7 +13,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Mailer\MailerInterface;
+
+
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -83,6 +84,7 @@ class AcceuilController extends AbstractController
             'form2'=>$form2->createView(),
             'controller_name' => 'AcceuilController',
 
+
         ]);
     }
     /**
@@ -100,18 +102,20 @@ class AcceuilController extends AbstractController
 
     /**
      * @Route ("/email")
-     * @param MailerInterface $mailer
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @param \Swift_Mailer $mailer
+     * @return null
      */
-    public function sendEMail(MailerInterface $mailer){
-        $email= (new Email())
-            ->from('alexandre.marillesse@gmail.com')
-            ->to('alexandre.marillesse@gmail.com')
-            ->subject('coucou')
-            ->text('email envoyé')
-            ->html("<p> See twig integrations for better HTML integration</p>");
-        $mailer->send($email);
-        return $this->redirectToRoute('acceuil');
+    public function sendEMail( \Swift_Mailer $mailer){
+        $email = (new \Swift_Message('Hello'))
+            ->setFrom('alexandre.marillesse@gmail.com')
+            ->setTo('alexandre.marillesse@gmail.com');
+       try {
+           $mailer->send($email);
+       }
+       catch(\Swift_TransportException $e){
+           echo $e->getMessage();
+           return $this->render('email/registrations.html.twig',['exc'=>'coucou',]);     }
+      return $this->redirectToRoute('acceuil');
     }
 
 }
