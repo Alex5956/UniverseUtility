@@ -53,11 +53,11 @@ class UserType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $attr = $view->vars['attr'];
-        $class = isset($attr['class']) ? $attr['class'].' ' : '';
-        $class .= 'js-user-autocomplete';
+        $id = isset($attr['id']) ? $attr['id'].' ' : '';
+        $id .= 'uploadForm';
 
-        $attr['class'] = $class;
-        $attr['data-autocomplete-url'] = $this->router->generate('app_login_autocomplete');
+        $attr['id'] = $id;
+        //$attr['data-autocomplete-url'] = $this->router->generate('app_login_autocomplete');
         $view->vars['attr'] = $attr;
     }
 
