@@ -47,16 +47,16 @@ class AcceuilController extends AbstractController
         $user= new User();
 
         /** @var User $user */
-        $form2=$this->createForm(UserType::class,$user);
+        $form2 = $this->createForm(UserType::class, $user);
         $form2->handleRequest($request);
         if ($form2->isSubmitted() && $form2->isValid()) {
             // $form->getData() holds the submitted values
             // but, the original `$task` variable has also been updated
             /** @var UploadedFile $task */
             $task = $form2->get('file')->getData();
-            $destination=$this->getParameter('files_directory');
-            $originalFilename=pathinfo($task->getClientOriginalName(), PATHINFO_FILENAME);
-            $newFilename=Urlizer::urlize($originalFilename).'-'.uniqid().'.'.$task->guessExtension();
+            $destination = $this->getParameter('files_directory');
+            $originalFilename = pathinfo($task->getClientOriginalName(), PATHINFO_FILENAME);
+            $newFilename = Urlizer::urlize($originalFilename) . '-' . uniqid() . '.' . $task->guessExtension();
 
             //$fileName = md5(uniqid()).'.'.$file->guessClientExtension();
             $task->move(
@@ -74,12 +74,8 @@ class AcceuilController extends AbstractController
             // $entityManager->persist($task);
             // $entityManager->flush();
             Stripe::$accountId;
-            return $this->redirectToRoute('acceuil',['task'=>$task]);
+            return $this->redirectToRoute('acceuil', ['task' => $task]);
         }
-
-
-
-
         return $this->render('acceuil/index.html.twig', [
             'form2'=>$form2->createView(),
             'controller_name' => 'AcceuilController',
